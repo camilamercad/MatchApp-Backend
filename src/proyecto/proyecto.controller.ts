@@ -29,7 +29,7 @@ export class ProyectoController {
     async GetAll(req: Request, res: Response): Promise<any> {
         const request = validate(req, res, SchemaType.Filtros, RequestPart.query);
 
-        const proyectos = await this.proyectoRepository.GetAll(request?.Titulo as string, request?.Descripcion as string, request?.IdUsuario as number, request?.IdCategoria as string, request?.OrdenarPorFecha as string);
+        const proyectos = await this.proyectoRepository.GetAll(request?.Titulo as string, request?.Descripcion as string, request?.NombreUsuario as string, request?.IdCategoria as string, request?.OrdenarPorFecha as string);
         return res.status(200).json(proyectos);
     }
 
