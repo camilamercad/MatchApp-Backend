@@ -72,4 +72,10 @@ export class UsuarioRepository implements IUsuarioRepository{
             id
         ]);
     }
+
+    async GetByName(name: string): Promise<boolean>{
+        const response = await client.query('SELECT EXISTS(SELECT 1 FROM Usuarios WHERE Nombre = $1) AS "exists"', [name])
+
+        return response.rows[0].exists as boolean;
+    }
 }

@@ -36,7 +36,7 @@ export class SchemaFactory {
         return Joi.object({
           Titulo: Joi.string().optional(),
           Descripcion: Joi.string().optional(),
-          IdUsuario: Joi.number().integer().min(1).optional(),
+          NombreUsuario: Joi.string().optional(),
           IdCategoria: Joi.string().pattern(/^[1-9]\d*$/).optional(),
           OrdenarPorFecha: Joi.string().valid("true", "false").optional()
         }).unknown(false);
