@@ -54,4 +54,15 @@ export class UsuarioController {
         await usuarioRepository.UpdateById(id, usuario);
         return res.status(204).send();
     }
+
+    async GetByName(req: Request, res: Response): Promise<any> {
+        const name = req.params.name as string;
+
+        if(name == null){
+            return res.status(400).send("El parámetro 'name' es obligatorio");
+        }
+
+        const exists = await usuarioRepository.GetByName(name);
+        return res.status(200).json({ exists });
+    }
 }

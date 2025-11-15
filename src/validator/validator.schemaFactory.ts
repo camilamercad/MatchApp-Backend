@@ -27,16 +27,16 @@ export class SchemaFactory {
             Nombre: Joi.string().min(1).max(20).required(),
             Email: Joi.string().email().max(50).required(),
             FechaDeNacimiento: Joi.date().less('now').required(),
-            Descripcion: Joi.string().max(255).optional(),
-            Telefono: Joi.number().integer().min(1000000).max(9999999999).optional(),
-            Genero: Joi.boolean().optional()
+            Descripcion: Joi.string().max(255).optional().allow(null),
+            Telefono: Joi.number().integer().min(1000000).max(9999999999).optional().allow(null),
+            Genero: Joi.boolean().optional().allow(null)
           });
 
       case SchemaType.Filtros:
         return Joi.object({
           Titulo: Joi.string().optional(),
           Descripcion: Joi.string().optional(),
-          IdUsuario: Joi.number().integer().min(1).optional(),
+          NombreUsuario: Joi.string().optional(),
           IdCategoria: Joi.string().pattern(/^[1-9]\d*$/).optional(),
           OrdenarPorFecha: Joi.string().valid("true", "false").optional()
         }).unknown(false);

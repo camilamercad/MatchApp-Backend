@@ -1,6 +1,7 @@
 import { Client } from "pg";
 import { IProyectoRepository } from "./proyecto.repository.interface.js";
 import { Proyecto } from "./proyecto.entity.js";
+import { ProyectoListItemDto } from "./proyecto-item-dto.js";
 
 export class ProyectoRepository implements IProyectoRepository {
   private client: Client;
@@ -36,37 +37,45 @@ export class ProyectoRepository implements IProyectoRepository {
         ]);
     }
 
-    public async GetAll(titulo?: string, descripcion?: string, idUsuario?: number, idCategoria?: string, ordenarPorFecha?: string): Promise<Proyecto[]> {
-        var query = 'SELECT Titulo, Descripcion, IdUsuario, FechaCreacion, IdCategoria, Imagen FROM Proyecto';
+    public async GetAll(titulo?: string, descripcion?: string, nombreUsuario?: string, idCategoria?: string, ordenarPorFecha?: string): Promise<ProyectoListItemDto[]> {
+        var query = 'SELECT p.Id, p.Titulo, p.Descripcion, p.IdUsuario, p.FechaCreacion, p.IdCategoria, p.Imagen, c.Nombre FROM Proyecto p JOIN Categorias c ON p.IdCategoria = c.Id';
         
-        if(titulo || descripcion || idUsuario || idCategoria) {
+        if(titulo || descripcion || nombreUsuario || idCategoria) {
             query += ` WHERE `;
             const conditions = [];
 
             if (titulo) {
-                conditions.push(`Titulo ILIKE '%${titulo}%'`);
+                conditions.push(`p.Titulo ILIKE '%${titulo}%'`);
             }
             if (descripcion) {
-                conditions.push(`Descripcion ILIKE '%${descripcion}%'`);
+                conditions.push(`p.Descripcion ILIKE '%${descripcion}%'`);
             }
-            if (idUsuario) {
-                conditions.push(`IdUsuario = ${idUsuario}`);
+            if (nombreUsuario) {
+                conditions.push(`c.Nombre ILIKE '%${nombreUsuario}%'`);
             }
             if (idCategoria) {
-                conditions.push(`IdCategoria = '${idCategoria}'`);
+                conditions.push(`p.IdCategoria = '${idCategoria}'`);
             }
 
             query += conditions.join(' AND ');
         }
         if (ordenarPorFecha == 'true') {
-            query += ' ORDER BY FechaCreacion DESC';
+            query += ' ORDER BY p.FechaCreacion DESC';
         }
         if (ordenarPorFecha == 'false') {
-            query += ' ORDER BY FechaCreacion ASC';
+            query += ' ORDER BY p.FechaCreacion ASC';
         }
 
         const result = await this.client.query(query);
-        return result.rows.map(row => new Proyecto(row.titulo, row.descripcion, row.idusuario, undefined, row.fechacreacion, row.idcategoria, row.imagen));
+        return result.rows.map(row => ({
+            Id: row.id,
+            Titulo: row.titulo,
+            Descripcion: row.descripcion,
+            NombreUsuario: row.nombre,
+            FechaCreacion: row.fechacreacion,
+            IdCategoria: row.idcategoria,
+            Imagen: row.imagen
+        } as ProyectoListItemDto));
     }
 
     async GetById(id: number): Promise<Proyecto | null>{
@@ -93,6 +102,5 @@ export class ProyectoRepository implements IProyectoRepository {
             proyecto.Imagen ?? null,
             id
         ]);
-    }
-            
+    }           
 }
