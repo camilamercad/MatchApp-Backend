@@ -1,6 +1,7 @@
 import express from 'express';
 import { proyectoRouter } from './proyecto/proyecto.routes.js';
 import { usuarioRouter } from './usuario/usuario.routes.js';
+import { categoriaRouter } from './categoria/categoria.routes.js';
 
 const app = express();
 
@@ -25,6 +26,8 @@ app.use((req, res, next) => {
 
 app.use('/api/proyectos', proyectoRouter);
 app.use('/api/usuarios', usuarioRouter);
+app.use('/api/categorias', categoriaRouter);
+  
 
 app.listen(3000, () => {
   console.log('Server runnning on http://localhost:3000/')

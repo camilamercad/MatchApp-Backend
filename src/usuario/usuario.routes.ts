@@ -8,4 +8,4 @@ usuarioRouter.post("/", usuarioController.Add);
 usuarioRouter.get("/:Id", usuarioController.GetById);
 usuarioRouter.delete("/:Id", usuarioController.DeleteById);
 usuarioRouter.put("/:Id", usuarioController.UpdateById);
-usuarioRouter.put("/:name", usuarioController.GetByName);
+usuarioRouter.get("/Nombre/:name", usuarioController.GetByName);

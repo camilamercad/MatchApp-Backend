@@ -15,6 +15,6 @@ export class CategoriaRepository implements ICategoriaRepository {
     }
     
     async GetAll(): Promise<{ Id: number; Nombre: string; }[]> {
-        return await client.query('SELECT Id, Nombre FROM Categoria').then(response => response.rows);
+        return await client.query('SELECT Id, Nombre FROM Categorias').then(response => response.rows);
     }
 }

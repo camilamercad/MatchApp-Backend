@@ -38,7 +38,7 @@ export class ProyectoRepository implements IProyectoRepository {
     }
 
     public async GetAll(titulo?: string, descripcion?: string, nombreUsuario?: string, idCategoria?: string, ordenarPorFecha?: string): Promise<ProyectoListItemDto[]> {
-        var query = 'SELECT p.Id, p.Titulo, p.Descripcion, p.IdUsuario, p.FechaCreacion, p.IdCategoria, p.Imagen, c.Nombre FROM Proyecto p JOIN Categoria c ON p.IdCategoria = c.Id';
+        var query = 'SELECT p.Id, p.Titulo, p.Descripcion, p.IdUsuario, p.FechaCreacion, p.IdCategoria, p.Imagen, c.Nombre FROM Proyecto p JOIN Categorias c ON p.IdCategoria = c.Id';
         
         if(titulo || descripcion || nombreUsuario || idCategoria) {
             query += ` WHERE `;
