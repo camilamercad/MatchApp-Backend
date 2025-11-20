@@ -8,4 +8,4 @@ const categoriaRepository = new CategoriaRepository();
 
 const categoriaController = new CategoriaController(categoriaRepository);
 
-categoriaRouter.get("/", categoriaController.GetAll.bind(categoriaController));
+categoriaRouter.get("/", categoriaController.GetAll);
