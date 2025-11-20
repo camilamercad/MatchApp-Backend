@@ -1,13 +1,17 @@
+import { Categoria } from "./categoria";
 import { CategoriaRepository } from "./categoria.repository";
+import { Request, Response } from 'express';
 
 export class CategoriaController{
     private repo : CategoriaRepository;
     
     constructor(repo: CategoriaRepository) {
         this.repo = repo;
+        this.GetAll = this.GetAll.bind(this);
      }
 
-    async GetAll(): Promise<{ Id: number; Nombre: string }[]> {
-        return await this.repo.GetAll();
+    async GetAll(req: Request, res: Response): Promise<any> {
+        const categorias: Categoria[] = await this.repo.GetAll();
+        return res.status(200).json(categorias);
     }
 }

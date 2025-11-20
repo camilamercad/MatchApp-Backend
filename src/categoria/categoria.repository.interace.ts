@@ -1,3 +1,5 @@
+import { Categoria } from "./categoria";
+
 export interface ICategoriaRepository {
-    GetAll(): Promise<{ Id: number; Nombre: string }[]>;
+    GetAll(): Promise<Categoria[]>;
 }
