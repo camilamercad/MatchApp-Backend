@@ -38,7 +38,7 @@ export class ProyectoRepository implements IProyectoRepository {
     }
 
     public async GetAll(titulo?: string, descripcion?: string, nombreUsuario?: string, idCategoria?: string, ordenarPorFecha?: string): Promise<ProyectoListItemDto[]> {
-        var query = 'SELECT p.Id, p.Titulo, p.Descripcion, p.IdUsuario, p.FechaCreacion, p.IdCategoria, p.Imagen, c.Nombre FROM Proyecto p JOIN Categorias c ON p.IdCategoria = c.Id';
+        var query = 'SELECT p.Id, p.Titulo, p.Descripcion, p.IdUsuario, u.Nombre as nombreUsuario, p.FechaCreacion, p.Imagen, p.IdCategoria, c.Nombre as categoria FROM Proyecto p JOIN Categorias c ON p.IdCategoria = c.Id JOIN Usuarios u ON p.IdUsuario = u.Id';
         
         if(titulo || descripcion || nombreUsuario || idCategoria) {
             query += ` WHERE `;
@@ -51,7 +51,7 @@ export class ProyectoRepository implements IProyectoRepository {
                 conditions.push(`p.Descripcion ILIKE '%${descripcion}%'`);
             }
             if (nombreUsuario) {
-                conditions.push(`c.Nombre ILIKE '%${nombreUsuario}%'`);
+                conditions.push(`u.Nombre ILIKE '%${nombreUsuario}%'`);
             }
             if (idCategoria) {
                 conditions.push(`p.IdCategoria = '${idCategoria}'`);
@@ -71,9 +71,11 @@ export class ProyectoRepository implements IProyectoRepository {
             Id: row.id,
             Titulo: row.titulo,
             Descripcion: row.descripcion,
-            NombreUsuario: row.nombre,
+            IdUsuario: row.idusuario,
+            NombreUsuario: row.nombreusuario,
             FechaCreacion: row.fechacreacion,
             IdCategoria: row.idcategoria,
+            Categoria: row.categoria,
             Imagen: row.imagen
         } as ProyectoListItemDto));
     }
