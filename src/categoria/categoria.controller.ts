@@ -14,4 +14,13 @@ export class CategoriaController{
         const categorias: Categoria[] = await this.repo.GetAll();
         return res.status(200).json(categorias);
     }
+
+    async GetById(req: Request, res: Response): Promise<any> {
+        const id = parseInt(req.params.id);
+        const categoria = await this.repo.GetById(id);
+        if (!categoria) {
+            return res.status(404).send("Categoria no encontrada");
+        }
+        return res.status(200).json(categoria);
+    }
 }

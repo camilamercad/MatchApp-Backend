@@ -9,3 +9,4 @@ const categoriaRepository = new CategoriaRepository();
 const categoriaController = new CategoriaController(categoriaRepository);
 
 categoriaRouter.get("/", categoriaController.GetAll);
+categoriaRouter.get("/:id", categoriaController.GetById);
