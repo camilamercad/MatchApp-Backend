@@ -25,4 +25,13 @@ export class CategoriaRepository implements ICategoriaRepository {
             nombre: row.nombre,
         } as Categoria));
     }
+
+    async GetById(id: number): Promise<Categoria | null> {
+        const response = await client.query('SELECT * FROM Categorias WHERE Id = $1', [id]);
+
+        return response.rows.map(row => ({
+            id: row.id,
+            nombre: row.nombre,
+        } as Categoria))[0] || null;
+    }
 }
