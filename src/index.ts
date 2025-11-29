@@ -1,7 +1,7 @@
 import express from 'express';
-import { proyectoRouter } from './proyecto/proyecto.routes.js';
-import { usuarioRouter } from './usuario/usuario.routes.js';
-import { categoriaRouter } from './categoria/categoria.routes.js';
+import { projectRouter } from './project/project-routes.js';
+import { userRouter } from './user/user-routes.js';
+import { categoryRouter } from './category/category-routes.js';
 
 const app = express();
 
@@ -24,9 +24,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/api/proyectos', proyectoRouter);
-app.use('/api/usuarios', usuarioRouter);
-app.use('/api/categorias', categoriaRouter);
+app.use('/api/projects', projectRouter);
+app.use('/api/users', userRouter);
+app.use('/api/categories', categoryRouter);
   
 
 app.listen(3000, () => {
