@@ -3,45 +3,45 @@ import Joi from "joi";
 export class SchemaFactory {
   static getSchema(type: SchemaType): Joi.ObjectSchema<any> {
     switch (type) {
-      case SchemaType.ProyectoAdd:
+      case SchemaType.addProject:
         return Joi.object({
-          Titulo: Joi.string().min(1).max(50).required(),
-          Descripcion: Joi.string().min(1).max(255).required(),
-          IdUsuario: Joi.number().integer().min(1).required(),
-          DescripcionDetallada: Joi.string().max(500).optional(),
-          IdCategoria: Joi.number().integer().min(1).optional(),
-          Imagen: Joi.string().uri().optional()
+          title: Joi.string().min(1).max(50).required(),
+          description: Joi.string().min(1).max(255).required(),
+          idUser: Joi.number().integer().min(1).required(),
+          detailedDescription: Joi.string().max(500).optional(),
+          idCategory: Joi.number().integer().min(1).optional(),
+          image: Joi.string().uri().optional()
         });
 
-      case SchemaType.ProyectoUpdate:
+      case SchemaType.updateProject:
         return Joi.object({
-          Titulo: Joi.string().min(1).max(50).required(),
-          Descripcion: Joi.string().min(1).max(255).required(),
-          DescripcionDetallada: Joi.string().max(500).optional(),
-          IdCategoria: Joi.number().integer().min(1).optional(),
-          Imagen: Joi.string().uri().optional()
+          title: Joi.string().min(1).max(50).required(),
+          description: Joi.string().min(1).max(255).required(),
+          detailedDescription: Joi.string().max(500).optional(),
+          idCategory: Joi.number().integer().min(1).optional(),
+          image: Joi.string().uri().optional()
         });
 
-        case SchemaType.Usuario:
+        case SchemaType.user:
           return Joi.object({
-            Nombre: Joi.string().min(1).max(20).required(),
-            Email: Joi.string().email().max(50).required(),
-            FechaDeNacimiento: Joi.string().required(),
-            Descripcion: Joi.string().max(255).optional().allow(null),
-            Telefono: Joi.number().integer().min(1000000).max(9999999999).optional().allow(null),
-            Genero: Joi.boolean().optional().allow(null)
+            name: Joi.string().min(1).max(20).required(),
+            email: Joi.string().email().max(50).required(),
+            dateBirth: Joi.string().required(),
+            description: Joi.string().max(255).optional().allow(null),
+            phone: Joi.number().integer().min(1000000).max(9999999999).optional().allow(null),
+            gender: Joi.boolean().optional().allow(null)
           });
 
-      case SchemaType.Filtros:
+      case SchemaType.filters:
         return Joi.object({
-          Titulo: Joi.string().optional(),
-          Descripcion: Joi.string().optional(),
-          NombreUsuario: Joi.string().optional(),
-          IdCategoria: Joi.string().pattern(/^[1-9]\d*$/).optional(),
-          OrdenarPorFecha: Joi.string().valid("true", "false").optional()
+          title: Joi.string().optional(),
+          description: Joi.string().optional(),
+          username: Joi.string().optional(),
+          idCategory: Joi.string().pattern(/^[1-9]\d*$/).optional(),
+          orderByDate: Joi.string().valid("true", "false").optional()
         }).unknown(false);
 
-      case SchemaType.Id:
+      case SchemaType.id:
         return Joi.object({
           Id: Joi.number().integer().min(1).required()
         }).unknown(false);
@@ -53,9 +53,9 @@ export class SchemaFactory {
 }
 
 export enum SchemaType {
-    ProyectoAdd = "proyectoAdd",
-    ProyectoUpdate = "proyectoUpdate",
-    Usuario = "usuario",
-    Filtros = "filtros",
-    Id = "id",
+    addProject = "addProject",
+    updateProject = "updateProject",
+    user = "user",
+    filters = "filters",
+    id = "id",
 }  
