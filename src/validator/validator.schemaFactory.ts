@@ -26,7 +26,7 @@ export class SchemaFactory {
           return Joi.object({
             Nombre: Joi.string().min(1).max(20).required(),
             Email: Joi.string().email().max(50).required(),
-            FechaDeNacimiento: Joi.date().less('now').required(),
+            FechaDeNacimiento: Joi.string().required(),
             Descripcion: Joi.string().max(255).optional().allow(null),
             Telefono: Joi.number().integer().min(1000000).max(9999999999).optional().allow(null),
             Genero: Joi.boolean().optional().allow(null)
