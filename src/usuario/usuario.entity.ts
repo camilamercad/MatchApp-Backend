@@ -5,6 +5,7 @@ export class Usuario{
         public FechaDeNacimiento: Date,
         public Descripcion?: string,
         public Telefono?: number,
-        public Genero?: boolean
+        public Genero?: boolean,
+        public Id?: number
     ) {}
 }

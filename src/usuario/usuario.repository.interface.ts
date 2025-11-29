@@ -5,5 +5,5 @@ export interface IUsuarioRepository {
     GetById(id: number): Promise<Usuario | null>;
     DeleteById(id: number): Promise<void>
     UpdateById(id: number, usuario: Usuario): Promise<void>;
-    GetByName(nombre: string): Promise<boolean>;
+    GetByName(name: string): Promise<Usuario | null>;
 }

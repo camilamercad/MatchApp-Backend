@@ -62,7 +62,12 @@ export class UsuarioController {
             return res.status(400).send("El parámetro 'name' es obligatorio");
         }
 
-        const exists = await usuarioRepository.GetByName(name);
-        return res.status(200).json({ exists });
+        const usuario = await usuarioRepository.GetByName(name);
+
+        if (!usuario) {
+            return res.status(404).send("Usuario no encontrado");
+        }
+        
+        return res.status(200).json({ usuario });
     }
 }

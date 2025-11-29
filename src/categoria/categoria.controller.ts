@@ -8,6 +8,7 @@ export class CategoriaController{
     constructor(repo: CategoriaRepository) {
         this.repo = repo;
         this.GetAll = this.GetAll.bind(this);
+        this.GetById = this.GetById.bind(this);
      }
 
     async GetAll(req: Request, res: Response): Promise<any> {
