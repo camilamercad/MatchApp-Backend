@@ -52,7 +52,7 @@ export class UsuarioRepository implements IUsuarioRepository{
             return null;
         }
 
-        return response.rows.map(row => new Usuario(row.nombre, row.email, row.fechadenacimiento, row.descripcion, row.telefono, row.genero))[0];
+        return response.rows.map(row => new Usuario(row.nombre, row.email, row.fechadenacimiento, row.descripcion, row.telefono, row.genero, row.id))[0];
     }
 
     async DeleteById(id: number): Promise<void> {
@@ -73,9 +73,13 @@ export class UsuarioRepository implements IUsuarioRepository{
         ]);
     }
 
-    async GetByName(name: string): Promise<boolean>{
-        const response = await client.query('SELECT EXISTS(SELECT 1 FROM Usuarios WHERE Nombre = $1) AS "exists"', [name])
+    async GetByName(name: string): Promise<Usuario | null> {
+        const response = await client.query('SELECT * FROM Usuarios WHERE Nombre = $1', [name]);
 
-        return response.rows[0].exists as boolean;
+        if (response.rows.length === 0) {
+            return null;
+        }
+
+        return response.rows.map(row => new Usuario(row.nombre, row.email, row.fechadenacimiento, row.descripcion, row.telefono, row.genero, row.id))[0];
     }
 }
